@@ -58,6 +58,7 @@ namespace MyDemo
             _spriteBatch.Draw(_bgSprite, new Vector2(0, 0), Color.AliceBlue);
             _spriteBatch.Draw(_balloonSprite, new Rectangle(0, 0,150,150), Color.AliceBlue);
             _spriteBatch.DrawString(_gameFont,"Hello world!",new Vector2(300,200),Color.White);
+            _spriteBatch.Draw(_CrosshairSprite, new Rectangle(0, 0, 150, 150), Color.AliceBlue);
             _spriteBatch.End();
 
             base.Draw(gameTime);
