@@ -49,3 +49,10 @@
 /processorParam:TextureFormat=Color
 /build:Assets/crosshair.png
 
+#begin Assets/myfont.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Assets/myfont.spritefont
+

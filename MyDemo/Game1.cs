@@ -12,7 +12,7 @@ namespace MyDemo
         Texture2D _balloonSprite;
         Texture2D _CrosshairSprite;
         Texture2D _bgSprite;
-
+        SpriteFont _gameFont;
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -32,9 +32,9 @@ namespace MyDemo
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             _balloonSprite = Content.Load<Texture2D>("assets/balloon");
-          //  _bgSprite = Content.Load<Texture2D>("bg");
-           // _CrosshairSprite = Content.Load<Texture2D>("crosshair");
-
+            _bgSprite = Content.Load<Texture2D>("assets/bg");
+            _CrosshairSprite = Content.Load<Texture2D>("assets/crosshair");
+            _gameFont = Content.Load<SpriteFont>("assets/myfont");
             // TODO: use this.Content to load your game content here
         }
 
@@ -55,7 +55,9 @@ namespace MyDemo
             // TODO: Add your drawing code here
 
             _spriteBatch.Begin();
+            _spriteBatch.Draw(_bgSprite, new Vector2(0, 0), Color.AliceBlue);
             _spriteBatch.Draw(_balloonSprite, new Rectangle(0, 0,150,150), Color.AliceBlue);
+            _spriteBatch.DrawString(_gameFont,"Hello world!",new Vector2(300,200),Color.White);
             _spriteBatch.End();
 
             base.Draw(gameTime);

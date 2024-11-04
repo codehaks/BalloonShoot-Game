@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<XnaContent xmlns:Graphics="Microsoft.Xna.Framework.Content.Pipeline.Graphics">
+  <Asset Type="Graphics:FontDescription">
+    <!-- The font name as installed on your system (e.g., Arial, Verdana) -->
+    <FontName>Arial</FontName>
+    
+    <!-- Size of the font in points -->
+    <Size>40</Size>
+    
+    <!-- Optional: Font style (Regular, Bold, Italic, etc.) -->
+    <Spacing>10</Spacing>
+    <Style>Bold</Style>
+
+    <!-- Character range (A-Z, a-z, etc.) -->
+    <CharacterRegions>
+      <CharacterRegion>
+        <Start> </Start>
+        <End>~</End>
+      </CharacterRegion>
+    </CharacterRegions>
+  </Asset>
+</XnaContent>
