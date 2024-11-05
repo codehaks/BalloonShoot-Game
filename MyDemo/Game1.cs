@@ -13,13 +13,16 @@ namespace MyDemo
         Texture2D _CrosshairSprite;
         Texture2D _bgSprite;
         SpriteFont _gameFont;
-        Rectangle balloonPosition = new Rectangle(100, 100,150,150);
+        Rectangle balloonPosition = new Rectangle(100, 100, 150, 150);
         const int balloonRadius = 75;
 
         // Assuming _CrosshairSprite is the texture, and mouseState represents the current mouse state.
         int spriteWidth = 150; // Width of your sprite
         int spriteHeight = 150; // Height of your sprite
 
+        int _score = 0;
+
+        bool _mouseReleased = true;
 
 
         MouseState mouseState;
@@ -56,7 +59,20 @@ namespace MyDemo
 
             // TODO: Add your update logic here
             mouseState = Mouse.GetState();
-           // balloonPosition.
+
+            if (mouseState.LeftButton == ButtonState.Pressed && _mouseReleased)
+            {
+                _score++;
+                _mouseReleased = false;
+
+            }
+
+            if (mouseState.LeftButton == ButtonState.Released)
+            {
+                _mouseReleased = true;
+            }
+          
+            // balloonPosition.
             base.Update(gameTime);
         }
 
@@ -69,7 +85,7 @@ namespace MyDemo
             _spriteBatch.Begin();
             _spriteBatch.Draw(_bgSprite, new Vector2(0, 0), Color.AliceBlue);
             _spriteBatch.Draw(_balloonSprite, balloonPosition, Color.AliceBlue);
-            // _spriteBatch.DrawString(_gameFont, "Hello world!", new Vector2(300, 200), Color.White);
+            _spriteBatch.DrawString(_gameFont, $"Score: {_score}", new Vector2(0, 0), Color.White);
 
             // Adjust mouse position to center the sprite
             int centeredX = mouseState.X - (spriteWidth / 2);
