@@ -21,7 +21,6 @@ namespace MyDemo
         Rectangle balloonPosition;
         const int balloonSize = 200;
 
-        // Assuming _CrosshairSprite is the texture, and mouseState represents the current mouse state.
         int spriteWidth = 150; // Width of your sprite
         int spriteHeight = 150; // Height of your sprite
 
@@ -55,7 +54,6 @@ namespace MyDemo
             _bgSprite = Content.Load<Texture2D>("assets/bg");
             _CrosshairSprite = Content.Load<Texture2D>("assets/crosshair");
             _gameFont = Content.Load<SpriteFont>("assets/myfont");
-            // TODO: use this.Content to load your game content here
         }
 
         protected override void Update(GameTime gameTime)
