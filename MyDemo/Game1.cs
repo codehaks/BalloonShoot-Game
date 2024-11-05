@@ -37,6 +37,7 @@ namespace MyDemo
             Content.RootDirectory = "Content";
             balloonPosition = new Rectangle(_balloonX, _balloonY, balloonSize, balloonSize);
             IsMouseVisible = false;
+            random = new Random();
         }
 
         protected override void Initialize()
@@ -71,6 +72,7 @@ namespace MyDemo
                 if (distanceFromCenter <= (balloonSize/4))
                 {
                     _score++;
+                    SetRandomBalloonPosition();
                 }
                 _mouseReleased = false;
             }
@@ -83,6 +85,17 @@ namespace MyDemo
 
             // balloonPosition.
             base.Update(gameTime);
+        }
+        Random random;
+        private void SetRandomBalloonPosition()
+        {
+            int maxX = _graphics.PreferredBackBufferWidth - balloonSize;
+            int maxY = _graphics.PreferredBackBufferHeight - balloonSize;
+
+            _balloonX = random.Next(0, maxX);
+            _balloonY = random.Next(0, maxY);
+
+            balloonPosition = new Rectangle(_balloonX, _balloonY, balloonSize, balloonSize);
         }
 
 
