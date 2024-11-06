@@ -41,4 +41,4 @@ BalloonShoot is a simple balloon-popping game developed using MonoGame and C#. T
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/BalloonShoot.git
+   git clone https://github.com/codehaks/BalloonShoot.git
