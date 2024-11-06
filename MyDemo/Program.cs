@@ -1,3 +1,3 @@
 ﻿
-using var game = new MyDemo.Game1();
+using var game = new MyDemo.BalloonShootGame();
 game.Run();

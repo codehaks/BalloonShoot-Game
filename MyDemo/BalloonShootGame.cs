@@ -5,7 +5,7 @@ using System;
 
 namespace MyDemo
 {
-    public class Game1 : Game
+    public class BalloonShootGame : Game
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
@@ -38,7 +38,7 @@ namespace MyDemo
 
         MouseState mouseState;
 
-        public Game1()
+        public BalloonShootGame()
         {
             _graphics = new GraphicsDeviceManager(this);
 
