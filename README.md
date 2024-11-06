@@ -31,20 +31,6 @@ BalloonShoot is a simple balloon-popping game developed using MonoGame and C#. T
 
 ![Game Screenshot](https://github.com/codehaks/BalloonShoot-Game/blob/master/screen.jpg)
 
-## Adding a Screenshot
-
-1. **Take a Screenshot**:
-   - Run your game and press `Print Screen` (or use `Alt + Print Screen` to capture just the game window).
-   - Open an image editor (like Paint) and paste (`Ctrl + V`) the screenshot. Save it as `screenshot.png` in the root directory of your project.
-  
-2. **Add the Screenshot to GitHub**:
-   - Place `screenshot.png` in your project folder, then include it in your GitHub repository.
-   - Update your README file if needed to ensure the screenshot path matches.
-
-3. **Load and Display the Screenshot on GitHub**:
-   - Commit and push the `screenshot.png` and updated `README.md` to your GitHub repository.
-   - GitHub will automatically display the screenshot in the README file if it’s in the same directory as `README.md`.
-
 ## Game Setup
 
 ### Prerequisites
