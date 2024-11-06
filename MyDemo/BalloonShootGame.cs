@@ -128,7 +128,15 @@ namespace MyDemo
                 }
             }
 
-            _balloonSpeed = 100 + _score * 50;
+            if (_score>0)
+            {
+                _balloonSpeed = 100 + _score * 50;
+            }
+            else
+            {
+                _balloonSpeed = 100;
+            }
+           
 
 
             base.Update(gameTime);
