@@ -34,7 +34,7 @@ namespace MyDemo
         double _popDisplayDuration = 0.5; // Pop display duration in seconds
         double _popTimer = 0; // Timer to track how long the pop texture is displayed
 
-
+        float _balloonSpeed = 300f;  // Speed of the balloon in pixels per second
 
         MouseState mouseState;
 
@@ -88,6 +88,18 @@ namespace MyDemo
             }
             else
             {
+                // Move the balloon upwards
+                _balloonY -= (int)(_balloonSpeed * gameTime.ElapsedGameTime.TotalSeconds);
+                balloonPosition.Y = _balloonY;
+
+                // Check if the balloon has moved off the screen at the top
+                if (_balloonY + balloonSize < 0)
+                {
+                    // Balloon missed, decrease score and reset position
+                    _score--;
+                    SetRandomBalloonPosition();
+                }
+
                 // Check if the mouse is clicking and hit the balloon
                 if (mouseState.LeftButton == ButtonState.Pressed && _mouseReleased)
                 {
@@ -134,10 +146,10 @@ namespace MyDemo
         private void SetRandomBalloonPosition()
         {
             int maxX = _graphics.PreferredBackBufferWidth - balloonSize;
-            int maxY = _graphics.PreferredBackBufferHeight - balloonSize;
 
+            // Set a random X position, but reset Y to the bottom of the screen
             _balloonX = random.Next(0, maxX);
-            _balloonY = random.Next(0, maxY);
+            _balloonY = _graphics.PreferredBackBufferHeight;
 
             balloonPosition = new Rectangle(_balloonX, _balloonY, balloonSize, balloonSize);
         }
