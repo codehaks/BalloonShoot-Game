@@ -13,6 +13,8 @@ namespace MyDemo
         Texture2D _balloonSprite;
         Texture2D _CrosshairSprite;
         Texture2D _bgSprite;
+        Texture2D _popSprite;
+
         SpriteFont _gameFont;
 
         int _balloonX = 100;
@@ -27,6 +29,11 @@ namespace MyDemo
         int _score = 0;
 
         bool _mouseReleased = true;
+
+        bool _balloonPopped = false;
+        double _popDisplayDuration = 0.5; // Pop display duration in seconds
+        double _popTimer = 0; // Timer to track how long the pop texture is displayed
+
 
 
         MouseState mouseState;
@@ -55,6 +62,7 @@ namespace MyDemo
             _bgSprite = Content.Load<Texture2D>("assets/bg");
             _CrosshairSprite = Content.Load<Texture2D>("assets/crosshair");
             _gameFont = Content.Load<SpriteFont>("assets/myfont");
+            _popSprite = Content.Load<Texture2D>("assets/pop");
         }
 
         protected override void Update(GameTime gameTime)
@@ -65,23 +73,59 @@ namespace MyDemo
             // TODO: Add your update logic here
             mouseState = Mouse.GetState();
 
-            if (mouseState.LeftButton == ButtonState.Pressed && _mouseReleased)
+            if (_balloonPopped)
             {
-                var targetCenter = new Vector2(balloonPosition.X+(balloonSize/ 2), balloonPosition.Y+ (balloonSize ) / 2);
-                var distanceFromCenter = Math.Sqrt(Math.Pow((mouseState.X- targetCenter.X), 2) + Math.Pow((mouseState.Y - targetCenter.Y), 2));
-                if (distanceFromCenter <= (balloonSize/4))
+                // If the balloon is popped, increment the timer
+                _popTimer += gameTime.ElapsedGameTime.TotalSeconds;
+
+                // If the timer exceeds the display duration, reset the balloon
+                if (_popTimer >= _popDisplayDuration)
                 {
-                    _score++;
+                    _balloonPopped = false;
                     SetRandomBalloonPosition();
+                    _popTimer = 0;
                 }
-                _mouseReleased = false;
             }
-
-
-            if (mouseState.LeftButton == ButtonState.Released)
+            else
             {
-                _mouseReleased = true;
+                // Check if the mouse is clicking and hit the balloon
+                if (mouseState.LeftButton == ButtonState.Pressed && _mouseReleased)
+                {
+                    var targetCenter = new Vector2(balloonPosition.X + (balloonSize / 2), balloonPosition.Y + (balloonSize / 2));
+                    var distanceFromCenter = Math.Sqrt(Math.Pow((mouseState.X - targetCenter.X), 2) + Math.Pow((mouseState.Y - targetCenter.Y), 2));
+
+                    if (distanceFromCenter <= (balloonSize / 2))
+                    {
+                        _score++;
+                        _balloonPopped = true; // Set balloon as popped
+                    }
+                    _mouseReleased = false;
+                }
+
+                if (mouseState.LeftButton == ButtonState.Released)
+                {
+                    _mouseReleased = true;
+                }
             }
+
+
+            //if (mouseState.LeftButton == ButtonState.Pressed && _mouseReleased)
+            //{
+            //    var targetCenter = new Vector2(balloonPosition.X+(balloonSize/ 2), balloonPosition.Y+ (balloonSize ) / 2);
+            //    var distanceFromCenter = Math.Sqrt(Math.Pow((mouseState.X- targetCenter.X), 2) + Math.Pow((mouseState.Y - targetCenter.Y), 2));
+            //    if (distanceFromCenter <= (balloonSize/4))
+            //    {
+            //        _score++;
+            //        SetRandomBalloonPosition();
+            //    }
+            //    _mouseReleased = false;
+            //}
+
+
+            //if (mouseState.LeftButton == ButtonState.Released)
+            //{
+            //    _mouseReleased = true;
+            //}
 
             // balloonPosition.
             base.Update(gameTime);
@@ -108,7 +152,20 @@ namespace MyDemo
 
             _spriteBatch.Begin();
             _spriteBatch.Draw(_bgSprite, new Vector2(0, 0), Color.AliceBlue);
-            _spriteBatch.Draw(_balloonSprite, balloonPosition, Color.AliceBlue);
+
+            if (_balloonPopped)
+            {
+                // Draw the pop texture where the balloon was
+                _spriteBatch.Draw(_popSprite, balloonPosition, Color.AliceBlue);
+            }
+            else
+            {
+                // Draw the balloon if it hasn't been popped
+                _spriteBatch.Draw(_balloonSprite, balloonPosition, Color.AliceBlue);
+            }
+
+
+
             _spriteBatch.DrawString(_gameFont, $"Score: {_score}", new Vector2(0, 0), Color.White);
 
             // Adjust mouse position to center the sprite
