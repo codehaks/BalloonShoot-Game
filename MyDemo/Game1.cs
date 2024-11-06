@@ -41,6 +41,13 @@ namespace MyDemo
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
+
+            // Set desired screen size
+            _graphics.PreferredBackBufferWidth = 1600;
+            _graphics.PreferredBackBufferHeight = 900;
+
+            _graphics.ApplyChanges(); // Apply the new screen size settings
+
             Content.RootDirectory = "Content";
             balloonPosition = new Rectangle(_balloonX, _balloonY, balloonSize, balloonSize);
             IsMouseVisible = false;
