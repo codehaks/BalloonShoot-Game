@@ -46,6 +46,7 @@ namespace MyDemo
             _graphics.PreferredBackBufferWidth = 1600;
             _graphics.PreferredBackBufferHeight = 900;
 
+            _balloonY = _graphics.PreferredBackBufferHeight;
             _graphics.ApplyChanges(); // Apply the new screen size settings
 
             Content.RootDirectory = "Content";
