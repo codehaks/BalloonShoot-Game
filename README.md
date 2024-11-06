@@ -29,8 +29,6 @@ BalloonShoot is a simple balloon-popping game developed using MonoGame and C#. T
 
 ## Screenshot
 
-Below is a placeholder for a screenshot of the game in action. Replace `screenshot.png` with an actual screenshot of the gameplay to showcase it.
-
 ![Game Screenshot](https://github.com/codehaks/BalloonShoot-Game/blob/master/screen.jpg)
 
 ## Adding a Screenshot
