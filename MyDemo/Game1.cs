@@ -120,26 +120,9 @@ namespace MyDemo
                 }
             }
 
-
-            //if (mouseState.LeftButton == ButtonState.Pressed && _mouseReleased)
-            //{
-            //    var targetCenter = new Vector2(balloonPosition.X+(balloonSize/ 2), balloonPosition.Y+ (balloonSize ) / 2);
-            //    var distanceFromCenter = Math.Sqrt(Math.Pow((mouseState.X- targetCenter.X), 2) + Math.Pow((mouseState.Y - targetCenter.Y), 2));
-            //    if (distanceFromCenter <= (balloonSize/4))
-            //    {
-            //        _score++;
-            //        SetRandomBalloonPosition();
-            //    }
-            //    _mouseReleased = false;
-            //}
+            _balloonSpeed = 100 + _score * 50;
 
 
-            //if (mouseState.LeftButton == ButtonState.Released)
-            //{
-            //    _mouseReleased = true;
-            //}
-
-            // balloonPosition.
             base.Update(gameTime);
         }
         Random random;
