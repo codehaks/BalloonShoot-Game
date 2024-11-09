@@ -15,6 +15,7 @@ public class BalloonShootGame : Game
     private InputHandler _inputHandler;
     private MouseState _mouseState;
     private Random _random;
+    private ContentLoader _contentLoader;
 
     public BalloonShootGame()
     {
@@ -32,16 +33,17 @@ public class BalloonShootGame : Game
     protected override void LoadContent()
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
-        var balloonTexture = Content.Load<Texture2D>("assets/balloon");
-        var popTexture = Content.Load<Texture2D>("assets/pop");
-        var crosshairTexture = Content.Load<Texture2D>("assets/crosshair");
-        var font = Content.Load<SpriteFont>("assets/myfont");
-        var backgroundTexture = Content.Load<Texture2D>("assets/bg");
 
-        _balloon = new Balloon(balloonTexture, popTexture, _random);
-        _crosshair = new Crosshair(crosshairTexture, 150, 150);
-        _gameScore = new GameScore(font);
-        _gameRenderer = new GameRenderer(_spriteBatch, backgroundTexture);
+        // Initialize and load content through ContentLoader
+        _contentLoader = new ContentLoader(Content);
+        _contentLoader.LoadAllContent();
+
+        // Inject dependencies into game objects
+        _balloon = new Balloon(_contentLoader.BalloonTexture, _contentLoader.PopTexture, _random);
+        _crosshair = new Crosshair(_contentLoader.CrosshairTexture, 150, 150);
+        _gameScore = new GameScore(_contentLoader.GameFont);
+        _gameRenderer = new GameRenderer(_spriteBatch, _contentLoader.BackgroundTexture);
+        _inputHandler = new InputHandler();
     }
 
     protected override void Update(GameTime gameTime)
