@@ -2,33 +2,32 @@
 using Microsoft.Xna.Framework.Graphics;
 
 
-namespace BalloonShoot.Models
+namespace BalloonShoot.Models;
+
+public class GameScore
 {
-    public class GameScore
+    private SpriteFont _font;
+    private int _score;
+
+    public GameScore(SpriteFont font)
     {
-        private SpriteFont _font;
-        private int _score;
+        _font = font;
+        _score = 0;
+    }
 
-        public GameScore(SpriteFont font)
-        {
-            _font = font;
-            _score = 0;
-        }
+    public void Increase()
+    {
+        _score++;
+    }
 
-        public void Increase()
-        {
-            _score++;
-        }
+    public void Decrease()
+    {
+        _score--;
+    }
 
-        public void Decrease()
-        {
-            _score--;
-        }
-
-        public void Draw(SpriteBatch spriteBatch)
-        {
-            spriteBatch.DrawString(_font, $"Score: {_score}", new Vector2(0, 0), Color.White);
-        }
+    public void Draw(SpriteBatch spriteBatch)
+    {
+        spriteBatch.DrawString(_font, $"Score: {_score}", new Vector2(0, 0), Color.White);
     }
 }
 
