@@ -2,6 +2,7 @@
 using BalloonShoot.Models;
 using BalloonShoot.Rendering;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Xna.Framework.Content;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -81,7 +82,7 @@ public class BalloonShootGame : Game
         _gameRenderer = _serviceProvider.GetRequiredService<GameRenderer>();
 
         // Create multiple balloons and add them to the list
-        for (int i = 0; i < 2; i++) // Add 2 balloons
+        for (int i = 0; i < 5; i++) // Add 2 balloons
         {
             var balloon = new Balloon(contentLoader.BalloonTexture, contentLoader.PopTexture, _random);
             _balloons.Add(balloon);
