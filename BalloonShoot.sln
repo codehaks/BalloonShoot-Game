@@ -5,12 +5,6 @@ VisualStudioVersion = 17.12.35424.110
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BalloonShoot", "MyDemo\BalloonShoot.csproj", "{E896BC38-D8C9-4140-B5FE-6E052218F468}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D1848ED7-1159-4EFD-90A4-A782B88BC9D5}"
-	ProjectSection(SolutionItems) = preProject
-		README.md = README.md
-		..\..\..\..\..\Users\Hakim\Desktop\screen.jpg = ..\..\..\..\..\Users\Hakim\Desktop\screen.jpg
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
