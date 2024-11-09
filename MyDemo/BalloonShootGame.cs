@@ -74,17 +74,17 @@ public class BalloonShootGame : Game
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-        // Initialize and load content through ContentLoader
-        _contentLoader = new ContentLoader(Content);
-        _contentLoader.LoadAllContent();
+        // Resolve and load content
+        var contentLoader = _serviceProvider.GetRequiredService<ContentLoader>();
+        contentLoader.LoadAllContent();
 
-        // Inject dependencies into game objects
-        _balloon = new Balloon(_contentLoader.BalloonTexture, _contentLoader.PopTexture, _random);
-        _crosshair = new Crosshair(_contentLoader.CrosshairTexture, 150, 150);
-        _gameScore = new GameScore(_contentLoader.GameFont);
-        _gameRenderer = new GameRenderer(_spriteBatch, _contentLoader.BackgroundTexture);
-        _inputHandler = new InputHandler();
+        // Retrieve instances from the service provider
+        _balloon = _serviceProvider.GetRequiredService<Balloon>();
+        _crosshair = _serviceProvider.GetRequiredService<Crosshair>();
+        _gameScore = _serviceProvider.GetRequiredService<GameScore>();
+        _gameRenderer = _serviceProvider.GetRequiredService<GameRenderer>();
     }
+
 
     protected override void Update(GameTime gameTime)
     {
