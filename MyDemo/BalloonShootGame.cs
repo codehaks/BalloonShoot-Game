@@ -1,6 +1,7 @@
 ﻿using BalloonShoot.Common;
 using BalloonShoot.Models;
 using BalloonShoot.Rendering;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 
 namespace BalloonShoot;
@@ -16,6 +17,8 @@ public class BalloonShootGame : Game
     private MouseState _mouseState;
     private Random _random;
     private ContentLoader _contentLoader;
+    private ServiceProvider _serviceProvider;
+
 
     public BalloonShootGame()
     {
@@ -28,6 +31,43 @@ public class BalloonShootGame : Game
         IsMouseVisible = false;
         _random = new Random();
         _inputHandler = new InputHandler();
+
+        ConfigureServices();
+    }
+
+    private void ConfigureServices()
+    {
+        var services = new ServiceCollection();
+
+        // Register basic services
+        services.AddSingleton<Random>();
+        services.AddSingleton<ContentLoader>(provider => new ContentLoader(Content));
+        services.AddSingleton<InputHandler>();
+
+        // Register game components with dependencies
+        services.AddTransient<Balloon>(provider =>
+        {
+            var contentLoader = provider.GetRequiredService<ContentLoader>();
+            return new Balloon(contentLoader.BalloonTexture, contentLoader.PopTexture, provider.GetRequiredService<Random>());
+        });
+        services.AddTransient<Crosshair>(provider =>
+        {
+            var contentLoader = provider.GetRequiredService<ContentLoader>();
+            return new Crosshair(contentLoader.CrosshairTexture, 150, 150);
+        });
+        services.AddTransient<GameScore>(provider =>
+        {
+            var contentLoader = provider.GetRequiredService<ContentLoader>();
+            return new GameScore(contentLoader.GameFont);
+        });
+        services.AddSingleton<GameRenderer>(provider =>
+        {
+            var contentLoader = provider.GetRequiredService<ContentLoader>();
+            return new GameRenderer(_spriteBatch, contentLoader.BackgroundTexture);
+        });
+
+        // Build the service provider
+        _serviceProvider = services.BuildServiceProvider();
     }
 
     protected override void LoadContent()
