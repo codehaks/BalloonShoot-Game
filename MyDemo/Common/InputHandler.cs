@@ -14,7 +14,7 @@ public class InputHandler
     {
         if (mouseState.LeftButton == ButtonState.Pressed && _mouseReleased)
         {
-            _mouseReleased = false;
+            // Return true on first press without resetting _mouseReleased yet
             return true;
         }
 
@@ -23,4 +23,6 @@ public class InputHandler
 
         return false;
     }
+
 }
+

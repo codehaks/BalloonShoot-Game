@@ -3,13 +3,15 @@ using BalloonShoot.Models;
 using BalloonShoot.Rendering;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace BalloonShoot;
 public class BalloonShootGame : Game
 {
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
-    private Balloon _balloon;
+    private List<Balloon> _balloons; // List of balloons
     private Crosshair _crosshair;
     private GameScore _gameScore;
     private GameRenderer _gameRenderer;
@@ -18,7 +20,6 @@ public class BalloonShootGame : Game
     private Random _random;
     private ContentLoader _contentLoader;
     private ServiceProvider _serviceProvider;
-
 
     public BalloonShootGame()
     {
@@ -32,6 +33,7 @@ public class BalloonShootGame : Game
         _random = new Random();
         _inputHandler = new InputHandler();
 
+        _balloons = new List<Balloon>(); // Initialize the list of balloons
         ConfigureServices();
     }
 
@@ -45,11 +47,6 @@ public class BalloonShootGame : Game
         services.AddSingleton<InputHandler>();
 
         // Register game components with dependencies
-        services.AddSingleton<Balloon>(provider =>
-        {
-            var contentLoader = provider.GetRequiredService<ContentLoader>();
-            return new Balloon(contentLoader.BalloonTexture, contentLoader.PopTexture, provider.GetRequiredService<Random>());
-        });
         services.AddSingleton<Crosshair>(provider =>
         {
             var contentLoader = provider.GetRequiredService<ContentLoader>();
@@ -79,12 +76,17 @@ public class BalloonShootGame : Game
         contentLoader.LoadAllContent();
 
         // Retrieve instances from the service provider
-        _balloon = _serviceProvider.GetRequiredService<Balloon>();
         _crosshair = _serviceProvider.GetRequiredService<Crosshair>();
         _gameScore = _serviceProvider.GetRequiredService<GameScore>();
         _gameRenderer = _serviceProvider.GetRequiredService<GameRenderer>();
-    }
 
+        // Create multiple balloons and add them to the list
+        for (int i = 0; i < 2; i++) // Add 2 balloons
+        {
+            var balloon = new Balloon(contentLoader.BalloonTexture, contentLoader.PopTexture, _random);
+            _balloons.Add(balloon);
+        }
+    }
 
     protected override void Update(GameTime gameTime)
     {
@@ -93,16 +95,21 @@ public class BalloonShootGame : Game
 
         _mouseState = Mouse.GetState();
 
-        // Update the balloon and check for collision
-        var balloon = _serviceProvider.GetRequiredService<Balloon>();
-        balloon.Update(gameTime);
+       
 
-        var inputHandler = _serviceProvider.GetRequiredService<InputHandler>();
-        if (inputHandler.IsLeftMouseClick(_mouseState) && !balloon.IsPopped && balloon.Position.Contains(_mouseState.Position))
+
+        // Update each balloon and check for collisions
+        foreach (var balloon in _balloons)
         {
-            balloon.Pop();
-            var gameScore = _serviceProvider.GetRequiredService<GameScore>();
-            gameScore.Increase();
+            balloon.Update(gameTime);
+
+            // Check for collision with each balloon
+            if (_inputHandler.IsLeftMouseClick(_mouseState) && !balloon.IsPopped && balloon.Position.Contains(_mouseState.Position))
+            {
+                Debug.WriteLine(_balloons.IndexOf(balloon));
+                balloon.Pop();
+                _gameScore.Increase();
+            }
         }
 
         base.Update(gameTime);
@@ -113,13 +120,18 @@ public class BalloonShootGame : Game
         GraphicsDevice.Clear(Color.CornflowerBlue);
         _spriteBatch.Begin();
 
-        // Draw background and game elements
-        var gameRenderer = _serviceProvider.GetRequiredService<GameRenderer>();
-        gameRenderer.DrawBackground();
-        gameRenderer.DrawGameElements(_serviceProvider.GetRequiredService<Balloon>(),
-                                      _serviceProvider.GetRequiredService<Crosshair>(),
-                                      _serviceProvider.GetRequiredService<GameScore>(),
-                                      _mouseState);
+        // Draw background
+        _gameRenderer.DrawBackground();
+
+        // Draw each balloon
+        foreach (var balloon in _balloons)
+        {
+            balloon.Draw(_spriteBatch);
+        }
+
+        // Draw other game elements
+        _gameScore.Draw(_spriteBatch);
+        _crosshair.Draw(_spriteBatch, _mouseState);
 
         _spriteBatch.End();
         base.Draw(gameTime);
