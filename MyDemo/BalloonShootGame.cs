@@ -35,6 +35,8 @@ namespace MyDemo
         double _popTimer = 0; // Timer to track how long the pop texture is displayed
 
         float _balloonSpeed = 300f;  // Speed of the balloon in pixels per second
+        int gameWidth = 1600;
+        int gameHeight = 900;
 
         MouseState mouseState;
 
@@ -43,8 +45,8 @@ namespace MyDemo
             _graphics = new GraphicsDeviceManager(this);
 
             // Set desired screen size
-            _graphics.PreferredBackBufferWidth = 1600;
-            _graphics.PreferredBackBufferHeight = 900;
+            _graphics.PreferredBackBufferWidth = gameWidth;
+            _graphics.PreferredBackBufferHeight = gameHeight;
 
             _balloonY = _graphics.PreferredBackBufferHeight;
             _graphics.ApplyChanges(); // Apply the new screen size settings
@@ -162,7 +164,7 @@ namespace MyDemo
             // TODO: Add your drawing code here
 
             _spriteBatch.Begin();
-            _spriteBatch.Draw(_bgSprite, new Vector2(0, 0), Color.AliceBlue);
+            _spriteBatch.Draw(_bgSprite, new Rectangle(0, 0,gameWidth,gameHeight), Color.AliceBlue);
 
             if (_balloonPopped)
             {
